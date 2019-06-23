@@ -17,5 +17,10 @@ module.exports = {
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended"
-  ]
+  ],
+  settings: {
+    react: {
+      version: "16.8.6"
+    }
+  }
 };

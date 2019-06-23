@@ -1,7 +1,13 @@
+import Dashboard from "views/Dashboard/Dashboard.jsx";
+import Analytics from "views/Analytics/Analytics.jsx";
+import Maps from "views/Maps/Maps.jsx";
+import Tables from "views/Tables/Tables.jsx";
+import Search from "views/Search/Search.jsx";
+import Info from "views/Info/Info.jsx";
+
 import Buttons from "views/Components/Buttons.jsx";
 import Calendar from "views/Calendar/Calendar.jsx";
 import Charts from "views/Charts/Charts.jsx";
-import Dashboard from "views/Dashboard/Dashboard.jsx";
 import ErrorPage from "views/Pages/ErrorPage.jsx";
 import ExtendedForms from "views/Forms/ExtendedForms.jsx";
 import ExtendedTables from "views/Tables/ExtendedTables.jsx";
@@ -29,12 +35,16 @@ import Widgets from "views/Widgets/Widgets.jsx";
 import Wizard from "views/Forms/Wizard.jsx";
 
 // @material-ui/icons
-import Apps from "@material-ui/icons/Apps";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import DateRange from "@material-ui/icons/DateRange";
-import GridOn from "@material-ui/icons/GridOn";
-import Image from "@material-ui/icons/Image";
+import TrendingUpIcon from "@material-ui/icons/TrendingUp";
 import Place from "@material-ui/icons/Place";
+import GridOn from "@material-ui/icons/GridOn";
+import SearchIcon from "@material-ui/icons/Search";
+import InfoIcon from "@material-ui/icons/Info";
+
+import Apps from "@material-ui/icons/Apps";
+import DateRange from "@material-ui/icons/DateRange";
+import Image from "@material-ui/icons/Image";
 import Timeline from "@material-ui/icons/Timeline";
 import WidgetsIcon from "@material-ui/icons/Widgets";
 
@@ -45,6 +55,46 @@ var dashRoutes = [
     rtlName: "لوحة القيادة",
     icon: DashboardIcon,
     component: Dashboard,
+    layout: "/admin"
+  },
+  {
+    path: "/analytics",
+    name: "Analytics",
+    rtlName: "لوحة القيادة",
+    icon: TrendingUpIcon,
+    component: Analytics,
+    layout: "/admin"
+  },
+  {
+    path: "/maps",
+    name: "Maps",
+    rtlName: "لوحة القيادة",
+    icon: Place,
+    component: Maps,
+    layout: "/admin"
+  },
+  {
+    path: "/tables",
+    name: "Tables",
+    rtlName: "لوحة القيادة",
+    icon: GridOn,
+    component: Tables,
+    layout: "/admin"
+  },
+  {
+    path: "/search",
+    name: "Search",
+    rtlName: "لوحة القيادة",
+    icon: SearchIcon,
+    component: Search,
+    layout: "/admin"
+  },
+  {
+    path: "/info",
+    name: "Info",
+    rtlName: "لوحة القيادة",
+    icon: InfoIcon,
+    component: Info,
     layout: "/admin"
   },
   {

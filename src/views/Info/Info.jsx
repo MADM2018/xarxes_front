@@ -11,6 +11,10 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Icon from "@material-ui/core/Icon";
 
 // @material-ui/icons
+// import ContentCopy from "@material-ui/icons/ContentCopy";
+import Store from "@material-ui/icons/Store";
+// import InfoOutline from "@material-ui/icons/InfoOutline";
+import Warning from "@material-ui/icons/Warning";
 import DateRange from "@material-ui/icons/DateRange";
 import LocalOffer from "@material-ui/icons/LocalOffer";
 import Update from "@material-ui/icons/Update";
@@ -27,6 +31,7 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Table from "components/Table/Table.jsx";
 import Button from "components/CustomButtons/Button.jsx";
+import Danger from "components/Typography/Danger.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
@@ -68,16 +73,8 @@ var mapData = {
 
 class Dashboard extends React.Component {
   state = {
-    value: 0,
-    tweets: 0,
-    dbSize: 0,
-    textLength: 0,
-    hashtags: 0
+    value: 0
   };
-  componentDidMount() {
-    this.fetchData();
-  }
-  fetchData = () => {};
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -91,17 +88,23 @@ class Dashboard extends React.Component {
         <GridContainer>
           <GridItem xs={12} sm={6} md={6} lg={3}>
             <Card>
-              <CardHeader color="info" stats icon>
-                <CardIcon color="info">
-                  <i className="fab fa-twitter" />
+              <CardHeader color="warning" stats icon>
+                <CardIcon color="warning">
+                  <Icon>content_copy</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Tweets Almacenados</p>
-                <h3 className={classes.cardTitle}>{this.state.tweets}</h3>
+                <p className={classes.cardCategory}>Used Space</p>
+                <h3 className={classes.cardTitle}>
+                  49/50 <small>GB</small>
+                </h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
-                  <Update />
-                  Just Updated
+                  <Danger>
+                    <Warning />
+                  </Danger>
+                  <a href="#pablo" onClick={e => e.preventDefault()}>
+                    Get more space
+                  </a>
                 </div>
               </CardFooter>
             </Card>
@@ -110,10 +113,10 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="success" stats icon>
                 <CardIcon color="success">
-                  <i className="fas fa-hashtag" />
+                  <Store />
                 </CardIcon>
-                <p className={classes.cardCategory}>Hashtags</p>
-                <h3 className={classes.cardTitle}>{this.state.hashtags}</h3>
+                <p className={classes.cardCategory}>Revenue</p>
+                <h3 className={classes.cardTitle}>$34,245</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
@@ -127,9 +130,9 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="danger" stats icon>
                 <CardIcon color="danger">
-                  <i className="fas fa-retweet"></i>
+                  <Icon>info_outline</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory}>Retweets</p>
+                <p className={classes.cardCategory}>Fixed Issues</p>
                 <h3 className={classes.cardTitle}>75</h3>
               </CardHeader>
               <CardFooter stats>
@@ -142,20 +145,17 @@ class Dashboard extends React.Component {
           </GridItem>
           <GridItem xs={12} sm={6} md={6} lg={3}>
             <Card>
-              <CardHeader color="warning" stats icon>
-                <CardIcon color="warning">
-                  <Icon>content_copy</Icon>
+              <CardHeader color="info" stats icon>
+                <CardIcon color="info">
+                  <i className="fab fa-twitter" />
                 </CardIcon>
-                <p className={classes.cardCategory}>Espacio Usado</p>
-                <h3 className={classes.cardTitle}>
-                  49/50 <small>GB</small>
-                </h3>
+                <p className={classes.cardCategory}>Followers</p>
+                <h3 className={classes.cardTitle}>+245</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    Get more space
-                  </a>
+                  <Update />
+                  Just Updated
                 </div>
               </CardFooter>
             </Card>
