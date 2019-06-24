@@ -155,13 +155,6 @@ class Dashboard extends React.Component {
           {...rest}
         />
         <div className={mainPanel} ref={this.mainPanel}>
-          <AdminNavbar
-            sidebarMinimize={this.sidebarMinimize.bind(this)}
-            miniActive={this.state.miniActive}
-            brandText={this.getActiveRoute(routes)}
-            handleDrawerToggle={this.handleDrawerToggle}
-            {...rest}
-          />
           {/* On the /maps/full-screen-maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
           {this.getRoute() ? (
             <div className={classes.content}>
@@ -180,7 +173,6 @@ class Dashboard extends React.Component {
               </Switch>
             </div>
           )}
-          {this.getRoute() ? <Footer fluid /> : null}
         </div>
       </div>
     );

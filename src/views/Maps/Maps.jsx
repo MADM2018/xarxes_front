@@ -11,7 +11,6 @@ import {
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
-import Map from "@material-ui/icons/Map";
 import AddLocation from "@material-ui/icons/AddLocation";
 import Place from "@material-ui/icons/Place";
 
@@ -32,21 +31,6 @@ const styles = {
     marginBottom: "0px"
   }
 };
-
-const SatelliteMap = withScriptjs(
-  withGoogleMap(() => (
-    <GoogleMap
-      defaultZoom={3}
-      mapTypeId={"satellite"}
-      defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
-      defaultOptions={{
-        scrollwheel: false
-      }}
-    >
-      <Marker position={{ lat: 40.748817, lng: -73.985428 }} />
-    </GoogleMap>
-  ))
-);
 
 const RegularMap = withScriptjs(
   withGoogleMap(() => (
@@ -147,44 +131,18 @@ class Maps extends React.Component {
           <Card>
             <CardHeader color="rose" icon>
               <CardIcon color="rose">
-                <Map />
-              </CardIcon>
-              <h4 className={classes.cardIconTitle}>Satellite Map</h4>
-            </CardHeader>
-            <CardBody>
-              <SatelliteMap
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={
-                  <div
-                    style={{
-                      height: `280px`,
-                      borderRadius: "6px",
-                      overflow: "hidden"
-                    }}
-                  />
-                }
-                mapElement={<div style={{ height: `100%` }} />}
-              />
-            </CardBody>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={6}>
-          <Card>
-            <CardHeader color="rose" icon>
-              <CardIcon color="rose">
                 <AddLocation />
               </CardIcon>
-              <h4 className={classes.cardIconTitle}>Regular Map</h4>
+              <h4 className={classes.cardIconTitle}>Tweets por Paises</h4>
             </CardHeader>
             <CardBody>
               <RegularMap
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"
+                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOiSQGPsuyY14OUcoYb4yydS1i_6ejIhA"
                 loadingElement={<div style={{ height: `100%` }} />}
                 containerElement={
                   <div
                     style={{
-                      height: `280px`,
+                      height: `400px`,
                       borderRadius: "6px",
                       overflow: "hidden"
                     }}
@@ -195,24 +153,24 @@ class Maps extends React.Component {
             </CardBody>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={12} md={6}>
+        <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="rose" icon>
               <CardIcon color="rose">
                 <Place />
               </CardIcon>
               <h4 className={classes.cardIconTitle}>
-                Custom Skin & Settings Map
+                Tweets por Comunidades Autónomas de España
               </h4>
             </CardHeader>
             <CardBody>
               <CustomSkinMap
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"
+                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOiSQGPsuyY14OUcoYb4yydS1i_6ejIhA"
                 loadingElement={<div style={{ height: `100%` }} />}
                 containerElement={
                   <div
                     style={{
-                      height: `280px`,
+                      height: `400px`,
                       borderRadius: "6px",
                       overflow: "hidden"
                     }}
