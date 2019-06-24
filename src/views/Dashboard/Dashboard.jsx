@@ -41,6 +41,14 @@ import {
 
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
 
+// requests
+import {
+  getTotalTweets,
+  getTotalHashtags,
+  getTotalRetweets,
+  getUsedSpace
+} from "../../requests/Dashboard";
+
 import priceImage1 from "assets/img/card-2.jpeg";
 import priceImage2 from "assets/img/card-3.jpeg";
 import priceImage3 from "assets/img/card-1.jpeg";
@@ -70,14 +78,47 @@ class Dashboard extends React.Component {
   state = {
     value: 0,
     tweets: 0,
-    dbSize: 0,
-    textLength: 0,
+    usedSpace: 0,
+    reTweets: 0,
     hashtags: 0
   };
+
   componentDidMount() {
-    this.fetchData();
+    this.fetchAllData();
   }
-  fetchData = () => {};
+
+  fetchAllData = () => {
+    this.fetchAndSetInState(getTotalTweets, "tweets");
+    this.fetchAndSetInState(getTotalHashtags, "hashtags");
+    this.fetchAndSetInState(getTotalRetweets, "reTweets");
+    this.fetchAndSetInState(getUsedSpace, "usedSpace");
+  };
+
+  fetchAndSetInState = async (request, field) => {
+    try {
+      const data = await request();
+      this.setFieldInState(field, data.value);
+    } catch (Ex) {
+      // eslint-disable-next-line no-console
+      console.log(Ex);
+    }
+  };
+
+  setFieldInState = (field, value) => {
+    this.setState({
+      [field]: value
+    });
+  };
+
+  getSpaceInGb = space => {
+    try {
+      const gb = space / 1024 / 1024 / 1024;
+      return gb.toFixed(2);
+    } catch (Ex) {
+      return 0;
+    }
+  };
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -130,7 +171,7 @@ class Dashboard extends React.Component {
                   <i className="fas fa-retweet"></i>
                 </CardIcon>
                 <p className={classes.cardCategory}>Retweets</p>
-                <h3 className={classes.cardTitle}>75</h3>
+                <h3 className={classes.cardTitle}>{this.state.reTweets}</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
@@ -148,7 +189,7 @@ class Dashboard extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory}>Espacio Usado</p>
                 <h3 className={classes.cardTitle}>
-                  49/50 <small>GB</small>
+                  {this.getSpaceInGb(this.state.usedSpace)} <small>GB</small>
                 </h3>
               </CardHeader>
               <CardFooter stats>

@@ -2,13 +2,6 @@ import axios from "axios";
 
 import { apiRootURL, apiAppKey } from "../config";
 
-const api = new API({
-  baseURL: apiRootURL,
-  headers: { "x-authorization": apiAppKey, "Content-Type": "application/json" }
-});
-
-export default api;
-
 class API {
   _api = null;
 
@@ -108,3 +101,10 @@ class API {
     return this;
   };
 }
+
+const api = new API({
+  baseURL: apiRootURL,
+  headers: { "x-authorization": apiAppKey, "Content-Type": "application/json" }
+});
+
+export default api;
