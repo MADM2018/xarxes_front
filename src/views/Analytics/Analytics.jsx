@@ -22,18 +22,105 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
 import {
-  roundedLineChart,
-  straightLinesChart,
-  simpleBarChart,
-  colouredLineChart,
   multipleBarsChart,
   colouredLinesChart,
   pieChart
 } from "variables/charts.jsx";
 
+import { getTweetsByParty, getTweetsByLeader } from "../../requests/Analytics";
+
 import chartsStyle from "assets/jss/material-dashboard-pro-react/views/chartsStyle.jsx";
+import { async } from "q";
 
 class Charts extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      partyPieChart: {
+        data: {},
+        options: {
+          height: "230px"
+        }
+      },
+      leaderPieChart: {
+        data: {},
+        options: {
+          height: "230px"
+        }
+      }
+    };
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData = () => {
+    this.loadPartyPieChart();
+    this.loadLeaderPieChart();
+  };
+
+  loadPartyPieChart = async () => {
+    try {
+      const data = await getTweetsByParty();
+
+      const series = this.parseSeries(data);
+      const labels = this.getLegendTexts(data);
+      const options = this.getOptionsPieChart();
+
+      const partyPieChart = {
+        data: {
+          series,
+          labels
+        },
+        options
+      };
+      this.setState({ partyPieChart });
+    } catch (Ex) {
+      console.log(Ex);
+    }
+  };
+
+  loadLeaderPieChart = async () => {
+    try {
+      const data = await getTweetsByLeader();
+
+      const series = this.parseSeries(data);
+      const labels = this.getLegendTexts(data);
+      const options = this.getOptionsPieChart();
+
+      const leaderPieChart = {
+        data: {
+          series,
+          labels
+        },
+        options
+      };
+      this.setState({ leaderPieChart });
+    } catch (Ex) {
+      console.log(Ex);
+    }
+  };
+
+  parseSeries = data => {
+    return Object.keys(data).map(key => {
+      return data[key].tweets;
+    });
+  };
+
+  getOptionsPieChart = () => {
+    return {
+      height: "230px"
+    };
+  };
+
+  getLegendTexts = data => {
+    return Object.keys(data).map(key => {
+      return `${data[key].party} ${data[key].tweets}`;
+    });
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -59,19 +146,11 @@ class Charts extends React.Component {
               </CardHeader>
               <CardBody>
                 <ChartistGraph
-                  data={pieChart.data}
+                  data={this.state.partyPieChart.data}
                   type="Pie"
-                  options={pieChart.options}
+                  options={this.state.partyPieChart.options}
                 />
               </CardBody>
-              <CardFooter stats className={classes.cardFooter}>
-                <h6 className={classes.legendTitle}>Legend</h6>
-                <i className={"fas fa-circle " + classes.info} /> Apple{` `}
-                <i className={"fas fa-circle " + classes.warning} /> Samsung
-                {` `}
-                <i className={"fas fa-circle " + classes.danger} /> Windows
-                Phone{` `}
-              </CardFooter>
             </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={6}>
@@ -102,23 +181,17 @@ class Charts extends React.Component {
                 <CardIcon color="danger">
                   <Timeline />
                 </CardIcon>
-                <h4 className={classes.cardIconTitle}>Tweets por Dirigente</h4>
+                <h4 className={classes.cardIconTitle}>
+                  Tweets por Lider Político
+                </h4>
               </CardHeader>
               <CardBody>
                 <ChartistGraph
-                  data={pieChart.data}
+                  data={this.state.leaderPieChart.data}
                   type="Pie"
-                  options={pieChart.options}
+                  options={this.state.leaderPieChart.options}
                 />
               </CardBody>
-              <CardFooter stats className={classes.cardFooter}>
-                <h6 className={classes.legendTitle}>Legend</h6>
-                <i className={"fas fa-circle " + classes.info} /> Apple{` `}
-                <i className={"fas fa-circle " + classes.warning} /> Samsung
-                {` `}
-                <i className={"fas fa-circle " + classes.danger} /> Windows
-                Phone{` `}
-              </CardFooter>
             </Card>
           </GridItem>
           <GridItem xs={12} sm={12} md={6}>
