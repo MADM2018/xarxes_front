@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+
+import { getTweetsPlaces } from "../../requests/Maps";
+
 // react components used to create a google map
 import {
   withScriptjs,
@@ -33,97 +36,55 @@ const styles = {
 };
 
 const RegularMap = withScriptjs(
-  withGoogleMap(() => (
+  withGoogleMap(props => (
     <GoogleMap
-      defaultZoom={8}
-      defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
+      defaultZoom={5}
+      defaultCenter={{ lat: 40.42423, lng: -3.710463 }}
       defaultOptions={{
         scrollwheel: false
       }}
     >
-      <Marker position={{ lat: 40.748817, lng: -73.985428 }} />
+      {props.markers.map((marker, index) => (
+        <Marker
+          key={index}
+          position={{ lat: marker.coordinates[0], lng: marker.coordinates[1] }}
+        />
+      ))}
     </GoogleMap>
   ))
 );
 
-const CustomSkinMap = withScriptjs(
-  withGoogleMap(() => (
-    <GoogleMap
-      defaultZoom={13}
-      defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
-      defaultOptions={{
-        scrollwheel: false,
-        disableDefaultUI: true,
-        zoomControl: true,
-        styles: [
-          {
-            featureType: "water",
-            stylers: [
-              { saturation: 43 },
-              { lightness: -11 },
-              { hue: "#0088ff" }
-            ]
-          },
-          {
-            featureType: "road",
-            elementType: "geometry.fill",
-            stylers: [
-              { hue: "#ff0000" },
-              { saturation: -100 },
-              { lightness: 99 }
-            ]
-          },
-          {
-            featureType: "road",
-            elementType: "geometry.stroke",
-            stylers: [{ color: "#808080" }, { lightness: 54 }]
-          },
-          {
-            featureType: "landscape.man_made",
-            elementType: "geometry.fill",
-            stylers: [{ color: "#ece2d9" }]
-          },
-          {
-            featureType: "poi.park",
-            elementType: "geometry.fill",
-            stylers: [{ color: "#ccdca1" }]
-          },
-          {
-            featureType: "road",
-            elementType: "labels.text.fill",
-            stylers: [{ color: "#767676" }]
-          },
-          {
-            featureType: "road",
-            elementType: "labels.text.stroke",
-            stylers: [{ color: "#ffffff" }]
-          },
-          { featureType: "poi", stylers: [{ visibility: "off" }] },
-          {
-            featureType: "landscape.natural",
-            elementType: "geometry.fill",
-            stylers: [{ visibility: "on" }, { color: "#b8cb93" }]
-          },
-          { featureType: "poi.park", stylers: [{ visibility: "on" }] },
-          {
-            featureType: "poi.sports_complex",
-            stylers: [{ visibility: "on" }]
-          },
-          { featureType: "poi.medical", stylers: [{ visibility: "on" }] },
-          {
-            featureType: "poi.business",
-            stylers: [{ visibility: "simplified" }]
-          }
-        ]
-      }}
-    >
-      <Marker position={{ lat: 40.748817, lng: -73.985428 }} />
-    </GoogleMap>
-  ))
-);
+class GoogleMaps extends React.Component {
+  constructor(props) {
+    super(props);
 
-class Maps extends React.Component {
+    this.state = {
+      tweetsMarkers: null
+    };
+  }
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData = () => {
+    this.getPlaces();
+  };
+
+  getPlaces = async () => {
+    try {
+      const data = await getTweetsPlaces();
+      this.setState({
+        tweetsMarkers: data
+      });
+    } catch (Ex) {
+      // eslint-disable-next-line no-console
+      console.log(Ex);
+    }
+  };
+
   render() {
+    const { tweetsMarkers } = this.state;
+
     const { classes } = this.props;
     return (
       <GridContainer>
@@ -136,48 +97,23 @@ class Maps extends React.Component {
               <h4 className={classes.cardIconTitle}>Tweets por Paises</h4>
             </CardHeader>
             <CardBody>
-              <RegularMap
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOiSQGPsuyY14OUcoYb4yydS1i_6ejIhA"
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={
-                  <div
-                    style={{
-                      height: `400px`,
-                      borderRadius: "6px",
-                      overflow: "hidden"
-                    }}
-                  />
-                }
-                mapElement={<div style={{ height: `100%` }} />}
-              />
-            </CardBody>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader color="rose" icon>
-              <CardIcon color="rose">
-                <Place />
-              </CardIcon>
-              <h4 className={classes.cardIconTitle}>
-                Tweets por Comunidades Autónomas de España
-              </h4>
-            </CardHeader>
-            <CardBody>
-              <CustomSkinMap
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOiSQGPsuyY14OUcoYb4yydS1i_6ejIhA"
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={
-                  <div
-                    style={{
-                      height: `400px`,
-                      borderRadius: "6px",
-                      overflow: "hidden"
-                    }}
-                  />
-                }
-                mapElement={<div style={{ height: `100%` }} />}
-              />
+              {tweetsMarkers && (
+                <RegularMap
+                  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOiSQGPsuyY14OUcoYb4yydS1i_6ejIhA"
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={
+                    <div
+                      style={{
+                        height: `600px`,
+                        borderRadius: "6px",
+                        overflow: "hidden"
+                      }}
+                    />
+                  }
+                  mapElement={<div style={{ height: `100%` }} />}
+                  markers={tweetsMarkers}
+                />
+              )}
             </CardBody>
           </Card>
         </GridItem>
@@ -186,8 +122,8 @@ class Maps extends React.Component {
   }
 }
 
-Maps.propTypes = {
+GoogleMaps.propTypes = {
   classes: PropTypes.object
 };
 
-export default withStyles(styles)(Maps);
+export default withStyles(styles)(GoogleMaps);

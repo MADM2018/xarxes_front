@@ -49,102 +49,73 @@ class Panels extends React.Component {
               alignCenter
               tabs={[
                 {
-                  tabButton: "Description",
+                  tabButton: "Descripción",
                   tabIcon: Info,
                   tabContent: (
                     <Card>
                       <CardHeader>
                         <h4 className={classes.cardTitle}>
-                          Description about product
+                          Sobre la Aplicación
                         </h4>
-                        <p className={classes.cardCategory}>
-                          More information here
-                        </p>
                       </CardHeader>
                       <CardBody>
-                        Collaboratively administrate empowered markets via
-                        plug-and-play networks. Dynamically procrastinate B2C
-                        users after installed base benefits.
+                        <b>TWITTER POLITICAL</b> es una aplicación que muestra
+                        el análisis de los 5 partidos mas importantes en España
+                        en la campaña electoral del año 2019, estos son PP,
+                        PSOE, Ciudadanos, VOX y Podemos.
                         <br />
                         <br />
-                        Dramatically visualize customer directed convergence
-                        without revolutionary ROI.
+                        La información que mostramos fue recopilada de la API de
+                        Twitter durante las meses de Febrero a Junio del 2019.
+                        Se descargaron todos los Tweets que hacian mencion a
+                        cada uno de los partidos políticos anteriores o a su
+                        líder.
+                        <br />
+                        <br />
+                        Nuestra base de datos cuenta con mas de 5 millones de
+                        Tweets únicos.
                       </CardBody>
                     </Card>
                   )
                 },
                 {
-                  tabButton: "Location",
-                  tabIcon: LocationOn,
-                  tabContent: (
-                    <Card>
-                      <CardHeader>
-                        <h4 className={classes.cardTitle}>
-                          Location of the product
-                        </h4>
-                        <p className={classes.cardCategory}>
-                          More information here
-                        </p>
-                      </CardHeader>
-                      <CardBody>
-                        Efficiently unleash cross-media information without
-                        cross-media value. Quickly maximize timely deliverables
-                        for real-time schemas.
-                        <br />
-                        <br />
-                        Dramatically maintain clicks-and-mortar solutions
-                        without functional solutions.
-                      </CardBody>
-                    </Card>
-                  )
-                },
-                {
-                  tabButton: "Legal Info",
+                  tabButton: "Información Legal",
                   tabIcon: Gavel,
                   tabContent: (
                     <Card>
                       <CardHeader>
                         <h4 className={classes.cardTitle}>
-                          Legal info of the product
+                          Información legal sobre la App
                         </h4>
-                        <p className={classes.cardCategory}>
-                          More information here
-                        </p>
                       </CardHeader>
                       <CardBody>
-                        Completely synergize resource taxing relationships via
-                        premier niche markets. Professionally cultivate
-                        one-to-one customer service with robust ideas.
+                        Toda la información descargada se hizo con el
+                        consentimiento de Twitter y es solo para fines
+                        académicos.
                         <br />
-                        <br />
-                        Dynamically innovate resource-leveling customer service
-                        for state of the art customer service.
                       </CardBody>
                     </Card>
                   )
                 },
                 {
-                  tabButton: "Help Center",
+                  tabButton: "Acerca de...",
                   tabIcon: HelpOutline,
                   tabContent: (
                     <Card>
                       <CardHeader>
-                        <h4 className={classes.cardTitle}>Help center</h4>
-                        <p className={classes.cardCategory}>
-                          More information here
-                        </p>
+                        <h4 className={classes.cardTitle}>Acerca de...</h4>
                       </CardHeader>
                       <CardBody>
-                        From the seamless transition of glass and metal to the
-                        streamlined profile, every detail was carefully
-                        considered to enhance your experience. So while its
-                        display is larger, the phone feels just right.
+                        <h4>Autor</h4>
+                        <p>
+                          Reinier César Mujica Hernández <br /> Estudiante del
+                          Master de Análisis de Datos Masivos de la UIB <br />
+                          reinier.mujica@gmail.com
+                        </p>
                         <br />
                         <br />
-                        Another Text. The first thing you notice when you hold
-                        the phone is how great it feels in your hand. The cover
-                        glass curves down around the sides to meet the anodized
-                        aluminum enclosure in a remarkable, simplified design.
+                        <h4>Tutor</h4>
+                        Toni Bibiloni
                       </CardBody>
                     </Card>
                   )

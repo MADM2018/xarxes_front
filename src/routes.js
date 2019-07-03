@@ -11,8 +11,6 @@ import Charts from "views/Charts/Charts.jsx";
 import ErrorPage from "views/Pages/ErrorPage.jsx";
 import ExtendedForms from "views/Forms/ExtendedForms.jsx";
 import ExtendedTables from "views/Tables/ExtendedTables.jsx";
-import FullScreenMap from "views/Maps/FullScreenMap.jsx";
-import GoogleMaps from "views/Maps/GoogleMaps.jsx";
 import GridSystem from "views/Components/GridSystem.jsx";
 import Icons from "views/Components/Icons.jsx";
 import LockScreenPage from "views/Pages/LockScreenPage.jsx";
@@ -30,7 +28,7 @@ import TimelinePage from "views/Pages/Timeline.jsx";
 import Typography from "views/Components/Typography.jsx";
 import UserProfile from "views/Pages/UserProfile.jsx";
 import ValidationForms from "views/Forms/ValidationForms.jsx";
-import VectorMap from "views/Maps/VectorMap.jsx";
+
 import Widgets from "views/Widgets/Widgets.jsx";
 import Wizard from "views/Forms/Wizard.jsx";
 
