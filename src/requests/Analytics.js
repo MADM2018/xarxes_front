@@ -7,3 +7,11 @@ export function getTweetsByParty() {
 export function getTweetsByLeader() {
   return api.get("tweetsByLeader");
 }
+
+export function getTweetsTimeLineByParty() {
+  return api.get("tweetsTimeLineByParty");
+}
+
+export function getTweetsTimeLineByLeader() {
+  return api.get("tweetsTimeLineByLeader");
+}

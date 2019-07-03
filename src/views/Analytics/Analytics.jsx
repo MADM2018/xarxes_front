@@ -27,10 +27,14 @@ import {
   pieChart
 } from "variables/charts.jsx";
 
-import { getTweetsByParty, getTweetsByLeader } from "../../requests/Analytics";
+import {
+  getTweetsByParty,
+  getTweetsByLeader,
+  getTweetsTimeLineByParty,
+  getTweetsTimeLineByLeader
+} from "../../requests/Analytics";
 
 import chartsStyle from "assets/jss/material-dashboard-pro-react/views/chartsStyle.jsx";
-import { async } from "q";
 
 class Charts extends React.Component {
   constructor(props) {
@@ -48,7 +52,9 @@ class Charts extends React.Component {
         options: {
           height: "230px"
         }
-      }
+      },
+      leaderTimeLineData: null,
+      partyTimeLineData: null
     };
   }
 
@@ -59,6 +65,8 @@ class Charts extends React.Component {
   fetchData = () => {
     this.loadPartyPieChart();
     this.loadLeaderPieChart();
+    this.loadLeaderTimeLineBarChart();
+    this.loadPartyTimeLineBarChart();
   };
 
   loadPartyPieChart = async () => {
@@ -103,6 +111,26 @@ class Charts extends React.Component {
     }
   };
 
+  loadLeaderTimeLineBarChart = async () => {
+    try {
+      const leaderTimeLineData = await getTweetsTimeLineByLeader();
+
+      this.setState({ leaderTimeLineData });
+    } catch (Ex) {
+      console.log(Ex);
+    }
+  };
+
+  loadPartyTimeLineBarChart = async () => {
+    try {
+      const partyTimeLineData = await getTweetsTimeLineByParty();
+
+      this.setState({ partyTimeLineData });
+    } catch (Ex) {
+      console.log(Ex);
+    }
+  };
+
   parseSeries = data => {
     return Object.keys(data).map(key => {
       return data[key].tweets;
@@ -121,8 +149,35 @@ class Charts extends React.Component {
     });
   };
 
+  parseTotalChartData = () => {
+    const { partyTimeLineData, leaderTimeLineData } = this.state;
+    if (!partyTimeLineData || !leaderTimeLineData) return null;
+
+    const mergedSeries = this.getMergedSeries();
+
+    return {
+      ...partyTimeLineData,
+      series: mergedSeries
+    };
+  };
+
+  getMergedSeries = () => {
+    const { partyTimeLineData, leaderTimeLineData } = this.state;
+
+    return partyTimeLineData.series.map((serie, index) => {
+      const sum = this.sumTwoArrays(serie, leaderTimeLineData.series[index]);
+      return sum;
+    });
+  };
+
+  sumTwoArrays = (first, second) => {
+    return first.map((item, index) => item + second[index]);
+  };
+
   render() {
     const { classes } = this.props;
+    const totalChartData = this.parseTotalChartData();
+
     return (
       <div>
         <Heading
@@ -165,7 +220,7 @@ class Charts extends React.Component {
               </CardHeader>
               <CardBody>
                 <ChartistGraph
-                  data={multipleBarsChart.data}
+                  data={this.state.partyTimeLineData}
                   type="Bar"
                   options={multipleBarsChart.options}
                   listener={multipleBarsChart.animation}
@@ -206,7 +261,7 @@ class Charts extends React.Component {
               </CardHeader>
               <CardBody>
                 <ChartistGraph
-                  data={multipleBarsChart.data}
+                  data={this.state.leaderTimeLineData}
                   type="Bar"
                   options={multipleBarsChart.options}
                   listener={multipleBarsChart.animation}
@@ -228,7 +283,7 @@ class Charts extends React.Component {
               </CardHeader>
               <CardBody>
                 <ChartistGraph
-                  data={colouredLinesChart.data}
+                  data={totalChartData}
                   type="Line"
                   options={colouredLinesChart.options}
                   listener={colouredLinesChart.animation}

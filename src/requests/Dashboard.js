@@ -15,3 +15,7 @@ export function getTotalRetweets() {
 export function getUsedSpace() {
   return api.get("usedSpace");
 }
+
+export function getTweetsTimeLineAllProfiles() {
+  return api.get("tweetsTimeLineAllProfiles");
+}

@@ -30,7 +30,7 @@ const dailySalesChart = {
       tension: 0
     }),
     low: 0,
-    high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    height: "200px",
     chartPadding: {
       top: 0,
       right: 0,
@@ -515,7 +515,7 @@ const colouredLinesChart = {
   },
   options: {
     lineSmooth: Chartist.Interpolation.cardinal({
-      tension: 10
+      tension: 0
     }),
     axisY: {
       showGrid: true,
@@ -525,7 +525,6 @@ const colouredLinesChart = {
       showGrid: false
     },
     low: 0,
-    high: 1000,
     showPoint: true,
     height: "300px"
   },
