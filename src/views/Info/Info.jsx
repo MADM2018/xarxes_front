@@ -66,10 +66,9 @@ class Panels extends React.Component {
                         <br />
                         <br />
                         La información que mostramos fue recopilada de la API de
-                        Twitter durante las meses de Febrero a Junio del 2019.
-                        Se descargaron todos los Tweets que hacian mencion a
-                        cada uno de los partidos políticos anteriores o a su
-                        líder.
+                        Twitter durante las meses de Enero a Junio del 2019. Se
+                        descargaron todos los Tweets que hacian mencion a cada
+                        uno de los partidos políticos anteriores o a su líder.
                         <br />
                         <br />
                         Nuestra base de datos cuenta con mas de 5 millones de
