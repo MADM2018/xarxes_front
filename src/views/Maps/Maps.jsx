@@ -49,7 +49,7 @@ const RegularMap = withScriptjs(
         averageCenter
         enableRetinaIcons
         gridSize={60}
-        minimumClusterSize={10}
+        minimumClusterSize={5}
       >
         {props.markers.map((marker, index) => (
           <Marker
@@ -106,6 +106,7 @@ class GoogleMaps extends React.Component {
 
   removeDuplicatesTweets = tweets => {
     const uniques = [];
+    console.log("Removing duplicates START");
 
     tweets.forEach(tweet => {
       const isIncluded = uniques.find(item => {
@@ -116,6 +117,8 @@ class GoogleMaps extends React.Component {
         uniques.push(tweet);
       }
     });
+
+    console.log("Removing duplicates FINISH");
 
     return uniques;
   };

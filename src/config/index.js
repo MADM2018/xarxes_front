@@ -1,7 +1,7 @@
 const ENV = "prod";
 
 const apiRootURL =
-  ENV === "prod"
+  ENV === "dev"
     ? "http://localhost:2000"
     : "https://alumnes-ltim.uib.es/madm04b";
 
