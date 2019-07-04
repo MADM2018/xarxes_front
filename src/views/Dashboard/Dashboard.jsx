@@ -110,12 +110,7 @@ class Dashboard extends React.Component {
                 <p className={classes.cardCategory}>Tweets Almacenados</p>
                 <h3 className={classes.cardTitle}>{this.state.tweets}</h3>
               </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats}>
-                  <Update />
-                  Just Updated
-                </div>
-              </CardFooter>
+              <CardFooter stats></CardFooter>
             </Card>
           </GridItem>
           <GridItem xs={12} sm={6} md={6} lg={3}>
@@ -127,12 +122,7 @@ class Dashboard extends React.Component {
                 <p className={classes.cardCategory}>Hashtags</p>
                 <h3 className={classes.cardTitle}>{this.state.hashtags}</h3>
               </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats}>
-                  <DateRange />
-                  Last 24 Hours
-                </div>
-              </CardFooter>
+              <CardFooter stats></CardFooter>
             </Card>
           </GridItem>
           <GridItem xs={12} sm={6} md={6} lg={3}>
@@ -144,12 +134,7 @@ class Dashboard extends React.Component {
                 <p className={classes.cardCategory}>Retweets</p>
                 <h3 className={classes.cardTitle}>{this.state.reTweets}</h3>
               </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats}>
-                  <LocalOffer />
-                  Tracked from Github
-                </div>
-              </CardFooter>
+              <CardFooter stats></CardFooter>
             </Card>
           </GridItem>
           <GridItem xs={12} sm={6} md={6} lg={3}>
@@ -163,13 +148,7 @@ class Dashboard extends React.Component {
                   {this.getSpaceInGb(this.state.usedSpace)} <small>GB</small>
                 </h3>
               </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats}>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    Get more space
-                  </a>
-                </div>
-              </CardFooter>
+              <CardFooter stats></CardFooter>
             </Card>
           </GridItem>
         </GridContainer>
