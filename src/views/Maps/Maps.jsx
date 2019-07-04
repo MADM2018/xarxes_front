@@ -11,6 +11,7 @@ import {
   Marker,
   InfoWindow
 } from "react-google-maps";
+import MarkerClusterer from "react-google-maps/lib/components/addons/MarkerClusterer";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -38,31 +39,38 @@ const styles = {
 const RegularMap = withScriptjs(
   withGoogleMap(props => (
     <GoogleMap
-      defaultZoom={5}
+      defaultZoom={3}
       defaultCenter={{ lat: 40.42423, lng: -3.710463 }}
       defaultOptions={{
         scrollwheel: false
       }}
     >
-      {props.markers.map((marker, index) => (
-        <Marker
-          key={index}
-          title={marker.text}
-          onClick={() => props.onMarkerOpen(index)}
-          position={{
-            lat: marker.coordinates[1],
-            lng: marker.coordinates[0]
-          }}
-        >
-          {props.showMarkerIndex === index && (
-            <InfoWindow onCloseClick={() => props.onMarkerClose()}>
-              <div className="">
-                <b>{marker.text}</b>
-              </div>
-            </InfoWindow>
-          )}
-        </Marker>
-      ))}
+      <MarkerClusterer
+        averageCenter
+        enableRetinaIcons
+        gridSize={60}
+        minimumClusterSize={10}
+      >
+        {props.markers.map((marker, index) => (
+          <Marker
+            key={index}
+            title={marker.text}
+            onClick={() => props.onMarkerOpen(index)}
+            position={{
+              lat: marker.coordinates[1],
+              lng: marker.coordinates[0]
+            }}
+          >
+            {props.showMarkerIndex === index && (
+              <InfoWindow onCloseClick={() => props.onMarkerClose()}>
+                <div className="">
+                  <b>{marker.text}</b>
+                </div>
+              </InfoWindow>
+            )}
+          </Marker>
+        ))}
+      </MarkerClusterer>
     </GoogleMap>
   ))
 );
@@ -88,12 +96,35 @@ class GoogleMaps extends React.Component {
     try {
       const data = await getTweetsPlaces();
       this.setState({
-        tweetsMarkers: data
+        tweetsMarkers: this.removeDuplicatesTweets(data)
       });
     } catch (Ex) {
       // eslint-disable-next-line no-console
       console.log(Ex);
     }
+  };
+
+  removeDuplicatesTweets = tweets => {
+    const uniques = [];
+
+    tweets.forEach(tweet => {
+      const isIncluded = uniques.find(item => {
+        return this.isEqual(item, tweet);
+      });
+
+      if (!isIncluded) {
+        uniques.push(tweet);
+      }
+    });
+
+    return uniques;
+  };
+
+  isEqual = (a, b) => {
+    return (
+      a.coordinates[0] === b.coordinates[0] &&
+      a.coordinates[1] === b.coordinates[1]
+    );
   };
 
   onMarkerOpen = index => {
