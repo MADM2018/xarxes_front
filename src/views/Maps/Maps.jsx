@@ -152,7 +152,11 @@ class GoogleMaps extends React.Component {
           <Card>
             <CardHeader color="rose" icon>
               <CardIcon color="rose">
-                <AddLocation />
+                {tweetsMarkers ? (
+                  <AddLocation />
+                ) : (
+                  <i className="fa fa-sync fa-spin" />
+                )}
               </CardIcon>
               <h4 className={classes.cardIconTitle}>Tweets por Paises</h4>
             </CardHeader>
