@@ -8,14 +8,14 @@ import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
-  Marker
+  Marker,
+  InfoWindow
 } from "react-google-maps";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
 import AddLocation from "@material-ui/icons/AddLocation";
-import Place from "@material-ui/icons/Place";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -47,8 +47,21 @@ const RegularMap = withScriptjs(
       {props.markers.map((marker, index) => (
         <Marker
           key={index}
-          position={{ lat: marker.coordinates[1], lng: marker.coordinates[0] }}
-        />
+          title={marker.text}
+          onClick={() => props.onMarkerOpen(index)}
+          position={{
+            lat: marker.coordinates[1],
+            lng: marker.coordinates[0]
+          }}
+        >
+          {props.showMarkerIndex === index && (
+            <InfoWindow onCloseClick={() => props.onMarkerClose()}>
+              <div className="">
+                <b>{marker.text}</b>
+              </div>
+            </InfoWindow>
+          )}
+        </Marker>
       ))}
     </GoogleMap>
   ))
@@ -59,7 +72,8 @@ class GoogleMaps extends React.Component {
     super(props);
 
     this.state = {
-      tweetsMarkers: null
+      tweetsMarkers: null,
+      showMarkerIndex: null
     };
   }
   componentDidMount() {
@@ -82,8 +96,20 @@ class GoogleMaps extends React.Component {
     }
   };
 
+  onMarkerOpen = index => {
+    this.setState({
+      showMarkerIndex: index
+    });
+  };
+
+  onMarkerClose = () => {
+    this.setState({
+      showMarkerIndex: null
+    });
+  };
+
   render() {
-    const { tweetsMarkers } = this.state;
+    const { tweetsMarkers, showMarkerIndex } = this.state;
 
     const { classes } = this.props;
     return (
@@ -110,8 +136,11 @@ class GoogleMaps extends React.Component {
                       }}
                     />
                   }
+                  showMarkerIndex={showMarkerIndex}
                   mapElement={<div style={{ height: `100%` }} />}
                   markers={tweetsMarkers}
+                  onMarkerOpen={this.onMarkerOpen}
+                  onMarkerClose={this.onMarkerClose}
                 />
               )}
             </CardBody>
