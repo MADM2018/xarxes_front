@@ -47,7 +47,7 @@ const RegularMap = withScriptjs(
       {props.markers.map((marker, index) => (
         <Marker
           key={index}
-          position={{ lat: marker.coordinates[0], lng: marker.coordinates[1] }}
+          position={{ lat: marker.coordinates[1], lng: marker.coordinates[0] }}
         />
       ))}
     </GoogleMap>
