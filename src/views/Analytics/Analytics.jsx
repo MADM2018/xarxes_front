@@ -42,13 +42,13 @@ class Charts extends React.Component {
 
     this.state = {
       partyPieChart: {
-        data: {},
+        data: null,
         options: {
           height: "230px"
         }
       },
       leaderPieChart: {
-        data: {},
+        data: null,
         options: {
           height: "230px"
         }
@@ -195,7 +195,11 @@ class Charts extends React.Component {
             <Card>
               <CardHeader color="danger" icon>
                 <CardIcon color="danger">
-                  <Timeline />
+                  {this.state.partyPieChart.data ? (
+                    <Timeline />
+                  ) : (
+                    <i className="fa fa-sync fa-spin" />
+                  )}
                 </CardIcon>
                 <h4 className={classes.cardIconTitle}>Tweets por Partido</h4>
               </CardHeader>
@@ -212,7 +216,11 @@ class Charts extends React.Component {
             <Card>
               <CardHeader color="rose" icon>
                 <CardIcon color="rose">
-                  <Timeline />
+                  {this.state.partyTimeLineData ? (
+                    <Timeline />
+                  ) : (
+                    <i className="fa fa-sync fa-spin" />
+                  )}
                 </CardIcon>
                 <h4 className={classes.cardIconTitle}>
                   Tweets por Partido <small>- En el tiempo</small>
@@ -234,7 +242,11 @@ class Charts extends React.Component {
             <Card>
               <CardHeader color="danger" icon>
                 <CardIcon color="danger">
-                  <Timeline />
+                  {this.state.leaderPieChart.data ? (
+                    <Timeline />
+                  ) : (
+                    <i className="fa fa-sync fa-spin" />
+                  )}
                 </CardIcon>
                 <h4 className={classes.cardIconTitle}>
                   Tweets por Lider Político
@@ -253,7 +265,11 @@ class Charts extends React.Component {
             <Card>
               <CardHeader color="rose" icon>
                 <CardIcon color="rose">
-                  <Timeline />
+                  {this.state.leaderTimeLineData ? (
+                    <Timeline />
+                  ) : (
+                    <i className="fa fa-sync fa-spin" />
+                  )}
                 </CardIcon>
                 <h4 className={classes.cardIconTitle}>
                   Tweets por Dirigente <small>- En el tiempo</small>
@@ -275,7 +291,11 @@ class Charts extends React.Component {
             <Card>
               <CardHeader color="warning" icon>
                 <CardIcon color="warning">
-                  <Timeline />
+                  {totalChartData ? (
+                    <Timeline />
+                  ) : (
+                    <i className="fa fa-sync fa-spin" />
+                  )}
                 </CardIcon>
                 <h4 className={classes.cardIconTitle}>
                   Tweets Total <small>- En el tiempo</small>

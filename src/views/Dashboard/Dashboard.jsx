@@ -43,11 +43,11 @@ import {
 
 class Dashboard extends React.Component {
   state = {
-    value: 0,
-    tweets: 0,
-    usedSpace: 0,
-    reTweets: 0,
-    hashtags: 0,
+    value: null,
+    tweets: null,
+    usedSpace: null,
+    reTweets: null,
+    hashtags: null,
     chartsData: null
   };
 
@@ -105,7 +105,11 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="info" stats icon>
                 <CardIcon color="info">
-                  <i className="fab fa-twitter" />
+                  {this.state.tweets ? (
+                    <i className="fab fa-twitter" />
+                  ) : (
+                    <i className="fa fa-sync fa-spin" />
+                  )}
                 </CardIcon>
                 <p className={classes.cardCategory}>Tweets Almacenados</p>
                 <h3 className={classes.cardTitle}>{this.state.tweets}</h3>
@@ -117,7 +121,11 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="success" stats icon>
                 <CardIcon color="success">
-                  <i className="fas fa-hashtag" />
+                  {this.state.hashtags ? (
+                    <i className="fas fa-hashtag" />
+                  ) : (
+                    <i className="fa fa-sync fa-spin" />
+                  )}
                 </CardIcon>
                 <p className={classes.cardCategory}>Hashtags</p>
                 <h3 className={classes.cardTitle}>{this.state.hashtags}</h3>
@@ -129,7 +137,11 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="danger" stats icon>
                 <CardIcon color="danger">
-                  <i className="fas fa-retweet"></i>
+                  {this.state.reTweets ? (
+                    <i className="fas fa-retweet"></i>
+                  ) : (
+                    <i className="fa fa-sync fa-spin" />
+                  )}
                 </CardIcon>
                 <p className={classes.cardCategory}>Retweets</p>
                 <h3 className={classes.cardTitle}>{this.state.reTweets}</h3>
@@ -141,7 +153,11 @@ class Dashboard extends React.Component {
             <Card>
               <CardHeader color="warning" stats icon>
                 <CardIcon color="warning">
-                  <Icon>content_copy</Icon>
+                  {this.state.usedSpace ? (
+                    <Icon>content_copy</Icon>
+                  ) : (
+                    <i className="fa fa-sync fa-spin" />
+                  )}
                 </CardIcon>
                 <p className={classes.cardCategory}>Espacio Usado</p>
                 <h3 className={classes.cardTitle}>
@@ -153,7 +169,7 @@ class Dashboard extends React.Component {
           </GridItem>
         </GridContainer>
         <GridContainer>
-          {chartsData &&
+          {chartsData ? (
             chartsData.map(data => (
               <GridItem key={data.id} xs={12} sm={12} md={4}>
                 <Card chart className={classes.cardHover}>
@@ -178,7 +194,13 @@ class Dashboard extends React.Component {
                   </CardFooter>
                 </Card>
               </GridItem>
-            ))}
+            ))
+          ) : (
+            <CardIcon color="warning">
+              Loading Charts
+              <i className="fa fa-sync fa-spin" />
+            </CardIcon>
+          )}
         </GridContainer>
       </div>
     );
