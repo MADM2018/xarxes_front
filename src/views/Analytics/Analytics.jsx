@@ -63,8 +63,6 @@ class Charts extends React.Component {
   }
 
   fetchData = () => {
-    this.loadPartyPieChart();
-    this.loadLeaderPieChart();
     this.loadLeaderTimeLineBarChart();
     this.loadPartyTimeLineBarChart();
   };
@@ -131,24 +129,6 @@ class Charts extends React.Component {
     }
   };
 
-  parseSeries = data => {
-    return Object.keys(data).map(key => {
-      return data[key].tweets;
-    });
-  };
-
-  getOptionsPieChart = () => {
-    return {
-      height: "230px"
-    };
-  };
-
-  getLegendTexts = data => {
-    return Object.keys(data).map(key => {
-      return `${data[key].party} ${data[key].tweets}`;
-    });
-  };
-
   parseTotalChartData = () => {
     const { partyTimeLineData, leaderTimeLineData } = this.state;
     if (!partyTimeLineData || !leaderTimeLineData) return null;
@@ -174,9 +154,75 @@ class Charts extends React.Component {
     return first.map((item, index) => item + second[index]);
   };
 
+  getPartyPieChart = () => {
+    const { partyTimeLineData } = this.state;
+    if (!partyTimeLineData) return null;
+
+    const series = this.aggrSeries(partyTimeLineData.series);
+    const labels = this.getLegendTexts(partyTimeLineData.parties, series);
+    const options = this.getOptionsPieChart();
+
+    const data = {
+      data: {
+        series,
+        labels
+      },
+      options
+    };
+
+    return data;
+  };
+
+  getLeaderPieChart = () => {
+    const { leaderTimeLineData } = this.state;
+    if (!leaderTimeLineData) return null;
+
+    const series = this.aggrSeries(leaderTimeLineData.series);
+    const labels = this.getLegendTexts(leaderTimeLineData.leaders, series);
+    const options = this.getOptionsPieChart();
+
+    const data = {
+      data: {
+        series,
+        labels
+      },
+      options
+    };
+
+    return data;
+  };
+
+  aggrSeries = data => {
+    return data.map(serie => {
+      let sum = 0;
+      for (let i = 0; i < serie.length; i++) {
+        sum += serie[i];
+      }
+      return sum;
+    });
+  };
+
+  getOptionsPieChart = () => {
+    return {
+      height: "300px",
+      chartPadding: 60,
+      labelOffset: 50,
+      labelDirection: "explode"
+    };
+  };
+
+  getLegendTexts = (names, series) => {
+    return names.map((name, index) => {
+      return `${name} ${series[index]}`;
+    });
+  };
+
   render() {
     const { classes } = this.props;
     const totalChartData = this.parseTotalChartData();
+
+    const partyPieChart = this.getPartyPieChart();
+    const leaderPieChart = this.getLeaderPieChart();
 
     return (
       <div>
@@ -195,7 +241,7 @@ class Charts extends React.Component {
             <Card>
               <CardHeader color="danger" icon>
                 <CardIcon color="danger">
-                  {this.state.partyPieChart.data ? (
+                  {partyPieChart ? (
                     <Timeline />
                   ) : (
                     <i className="fa fa-sync fa-spin" />
@@ -204,11 +250,13 @@ class Charts extends React.Component {
                 <h4 className={classes.cardIconTitle}>Tweets por Partido</h4>
               </CardHeader>
               <CardBody>
-                <ChartistGraph
-                  data={this.state.partyPieChart.data}
-                  type="Pie"
-                  options={this.state.partyPieChart.options}
-                />
+                {partyPieChart && (
+                  <ChartistGraph
+                    data={partyPieChart.data}
+                    type="Pie"
+                    options={partyPieChart.options}
+                  />
+                )}
               </CardBody>
             </Card>
           </GridItem>
@@ -242,7 +290,7 @@ class Charts extends React.Component {
             <Card>
               <CardHeader color="danger" icon>
                 <CardIcon color="danger">
-                  {this.state.leaderPieChart.data ? (
+                  {leaderPieChart ? (
                     <Timeline />
                   ) : (
                     <i className="fa fa-sync fa-spin" />
@@ -253,11 +301,13 @@ class Charts extends React.Component {
                 </h4>
               </CardHeader>
               <CardBody>
-                <ChartistGraph
-                  data={this.state.leaderPieChart.data}
-                  type="Pie"
-                  options={this.state.leaderPieChart.options}
-                />
+                {leaderPieChart && (
+                  <ChartistGraph
+                    data={leaderPieChart.data}
+                    type="Pie"
+                    options={leaderPieChart.options}
+                  />
+                )}
               </CardBody>
             </Card>
           </GridItem>

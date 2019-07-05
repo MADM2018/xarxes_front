@@ -8,6 +8,7 @@ import RtlLayout from "layouts/RTL.jsx";
 import AdminLayout from "layouts/Admin.jsx";
 
 import "assets/scss/material-dashboard-pro-react.scss?v=1.7.0";
+import "assets/custom.css";
 
 const hist = createBrowserHistory();
 
